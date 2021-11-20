@@ -35,5 +35,31 @@ data_clean_selectbylocation=dfselection(setf,data_clean,'Location')
 data_pollution_selectbylocation=dfselection(setf,data_pollution,'Entity')
 data_ele_selectbylocation=dfselection(setf,data_ele,'Entity')
 
+# Drop 'Province_State', which column is empty. Drop the NA value
+data_health_selectbylocation = data_health_selectbylocation.drop(columns=['Province_State'])
+data_health_selectbylocation = data_health_selectbylocation.dropna()
+# [56 rows x 13 columns]
 
+# Drop NA
+data_clean_selectbylocation = data_clean_selectbylocation.dropna()
+# [2801 rows x 4 columns]
 
+# Drop NA
+data_pollution_selectbylocation = data_pollution_selectbylocation.dropna()
+# [4144 rows x 7 columns]
+
+# Drop NA
+data_ele_selectbylocation = data_ele_selectbylocation.dropna()
+# [3347 rows x 11 columns]
+
+# Select data recent years
+data_clean_selectbylocation = data_clean_selectbylocation[data_clean_selectbylocation['Period']>=2010]
+# [1331 rows x 4 columns]
+
+# Select data recent years
+data_pollution_selectbylocation = data_pollution_selectbylocation[data_pollution_selectbylocation['Year']>=2010]
+# [1184 rows x 7 columns]
+
+# Select data recent years
+data_ele_selectbylocation = data_ele_selectbylocation[data_ele_selectbylocation['Year']>=2010]
+# [1537 rows x 11 columns]
