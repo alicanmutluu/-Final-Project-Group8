@@ -1,6 +1,14 @@
 import pandas as pd
 import numpy as np
 
+# read file from Github
+data_health = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/2.12_Health_systems.csv',  sep = ',')
+data_clean = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/cleanFuelAndTech.csv',  sep = ',')
+data_pollution = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/death-rates-from-air-pollution.csv',  sep = ',')
+data_ele = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/Electricity_Production_By_Source.csv',  sep = ',')
+data_share = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/share-energy-consum-by-source.csv',  sep = ',')
+
+
 
 def dfselection(s, df, v):
     ans = df.copy()
@@ -10,13 +18,6 @@ def dfselection(s, df, v):
 
     return ans
 
-
-
-data_health = pd.read_csv('2.12_Health_systems.csv')
-data_clean = pd.read_csv('cleanFuelAndTech.csv')
-data_pollution = pd.read_csv('death-rates-from-air-pollution.csv')
-data_ele = pd.read_csv('Electricity_Production_By_Source.csv')
-data_share = pd.read_csv('share-energy-consum-by-source.csv')
 
 set1 = {i for i in data_health['World_Bank_Name']}
 set2 = {i for i in data_clean['Location']}
@@ -197,3 +198,5 @@ data_share = year2016(data_share)
 data1 = pd.merge(data_pollution, data_ele, on=["Country", "Year"])
 data2 = pd.merge(data_clean, data1, on=["Country", "Year"])
 data_final = pd.merge(data2, data_health, on=["Country"])
+
+#
