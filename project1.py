@@ -1,6 +1,14 @@
 import pandas as pd
 import numpy as np
 
+# read file from Github
+data_health = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/2.12_Health_systems.csv',  sep = ',')
+data_clean = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/cleanFuelAndTech.csv',  sep = ',')
+data_pollution = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/death-rates-from-air-pollution.csv',  sep = ',')
+data_ele = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/Electricity_Production_By_Source.csv',  sep = ',')
+data_share = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/share-energy-consum-by-source.csv',  sep = ',')
+
+
 
 def dfselection(s, df, v):
     ans = df.copy()
@@ -10,13 +18,6 @@ def dfselection(s, df, v):
 
     return ans
 
-
-
-data_health = pd.read_csv('2.12_Health_systems.csv')
-data_clean = pd.read_csv('cleanFuelAndTech.csv')
-data_pollution = pd.read_csv('death-rates-from-air-pollution.csv')
-data_ele = pd.read_csv('Electricity_Production_By_Source.csv')
-data_share = pd.read_csv('share-energy-consum-by-source.csv')
 
 set1 = {i for i in data_health['World_Bank_Name']}
 set2 = {i for i in data_clean['Location']}
@@ -95,17 +96,7 @@ data_share_selectbylocation = data_share_selectbylocation.dropna()
 # [3339 rows x 10 columns] --- share
 
 
-# Select data recent years
-data_clean_selectbylocation = data_clean_selectbylocation[data_clean_selectbylocation['Year'] >= 2010]
-# [1331 rows x 4 columns] --- clean 2010-2021
 
-# Select data recent years
-data_pollution_selectbylocation = data_pollution_selectbylocation[data_pollution_selectbylocation['Year'] >= 2010]
-# [1184 rows x 7 columns] --- pollution 2010-2021
-
-# Select data recent years
-data_ele_selectbylocation = data_ele_selectbylocation[data_ele_selectbylocation['Year'] >= 2010]
-# [1537 rows x 11 columns] --- ele 2010-2021
 
 # Select data recent years
 data_share_selectbylocation = data_share_selectbylocation[data_share_selectbylocation['Year'] >= 2010]
@@ -125,7 +116,6 @@ data_ele_selectbylocation = data_ele_selectbylocation[data_ele_selectbylocation[
 
 # Select data recent years
 data_share_selectbylocation = data_share_selectbylocation[data_share_selectbylocation['Year']>=2010]
-
 # [650 rows x 10 columns] --- share 2010-2021
 
 # Select the 2016 data
@@ -139,7 +129,6 @@ Data_2016 = Data3[Data3['Year'] == 2016]
 Data3 = pd.merge(Data1, Data2, on = ["Country", "Year"])
 
 Data_2016 = Data3[Data3['Year']==2016]
->>>>>>> Stashed changes
 # [65 rows x 26 columns]
 
 # Data1_2016 = Data1[Data1['Year']==2016]  --- [65 rows x 19 columns]
@@ -167,3 +156,47 @@ Data_2016_final = pd.merge(Data_2016, data_health_selectbylocation, on = ["Count
 # data_pollution['Entity'].nunique()   ---------------- 231
 # data_ele['Entity'].nunique()  -----------------------  235
 # data_share['Entity'].nunique() ---------------------- 83
+
+
+# ------------------------------ Retry 1 ----------------------------------------
+
+def drop(D):
+    a = D.dropna()
+    return a
+
+data_health= data_health.drop(columns=['Province_State'])   # 'Province_State' is empty
+
+data_clean = drop(data_clean)
+data_health = drop(data_health)
+data_pollution = drop(data_pollution)
+data_ele = drop(data_ele)
+data_share = drop(data_share)
+
+data_health = data_health.rename(columns={"World_Bank_Name": "Country"})
+data_clean = data_clean.rename(columns={"Location": "Country"})
+data_pollution = data_pollution.rename(columns={"Entity": "Country"})
+data_ele = data_ele.rename(columns={"Entity": "Country"})
+data_share = data_share.rename(columns={"Entity": "Country"})
+
+data_clean = data_clean.rename(columns={"Period": "Year"})
+
+def year2016(X):
+    a = X[X['Year']==2016]
+    return a
+
+data_clean = year2016(data_clean)
+data_pollution = year2016(data_pollution)
+data_ele = year2016(data_ele)
+data_share = year2016(data_share)
+
+# data_clean ---- [190 rows x 4 columns]
+# data_pollution ---- [196 rows x 7 columns]
+# data_ele ---- [210 rows x 11 columns]
+# data_share ---- [80 rows x 11 columns]
+
+# Don't merge data_share this time
+data1 = pd.merge(data_pollution, data_ele, on=["Country", "Year"])
+data2 = pd.merge(data_clean, data1, on=["Country", "Year"])
+data_final = pd.merge(data2, data_health, on=["Country"])
+
+#
