@@ -59,6 +59,11 @@ class preprocessing():
         df2=self.dfselection(self.setf2,self.data_clean,'Location')
         df3=self.dfselection(self.setf2,self.data_pollution,'Entity')
         df4=self.dfselection(self.setf2,self.data_GDP,'Country')
+        df2 = df2.rename(columns={"Period": "Year"})
+        df3 = df3.rename(columns={'Entity': 'Location'})
+        df4 = df4.rename(columns={'Country': 'Location'})
+        out = pd.merge(df2, df3, how='outer', on=['Location','Year'])
+        out = pd.merge(out, df4, how='outer', on=['Location','Year'])
         
         return
 
@@ -67,11 +72,29 @@ class preprocessing():
         df3=self.dfselection(self.setf,self.data_pollution,'Entity')
         df4=self.dfselection(self.setf,self.data_GDP,'Country')
         df5=self.dfselection(self.setf,self.data_share,'Entity')
-        
+        df3 = df3.rename(columns={'Entity': 'Location'})
+        df4 = df4.rename(columns={'Country': 'Location'})
+        df5 = df5.rename(columns={'Entity': 'Location'})
+        out = pd.merge(df3, df4, how='outer', on=['Location', 'Year'])
+        out = pd.merge(out, df5, how='outer', on=['Location', 'Year'])
         return
-#prepare data for indoor 
+#prepare data for indoor2016 
 pre=preprocessing()
 indoor2016=pre.indoor2016()
 print(indoor2016.columns)
 print(indoor2016.shape)        
+#prepare data for indoor
+pre=preprocessing()
+indoor=pre.indoor()
+print(indoor.columns)
+print(indoor.shape) 
+#prepare data for outdoor2016
+pre=preprocessing()
+outdoor2016=pre.outdoor2016()
+print(outdoor2016.columns)
+print(outdoor2016.shape) 
 #prepare data for outdoor
+pre=preprocessing()
+outdoor=pre.outdoor()
+print(outdoor.columns)
+print(outdoor.shape) 
