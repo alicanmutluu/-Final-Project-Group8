@@ -83,6 +83,17 @@ class estimator(QMainWindow):
         return 'enter the quantity of GDP and rate to estimate fataility per 100,000 people'
 
 
+def main():
+    #::-------------------------------------------------
+    # Initiates the application
+    #::-------------------------------------------------
+    app = QApplication(sys.argv)
+    app.setStyle('Fusion')
+    ex = App()
+    ex.show()
+    sys.exit(app.exec_())
+
+
 class App(QMainWindow):
     #::-------------------------------------------------------
     # This class creates all the elements of the application
@@ -144,5 +155,5 @@ def GDP_pollution():
 
 if __name__ == '__main__':
     # Reading the Data and calling for the application
-    GDP_pollution()
+    #GDP_pollution()
     main()
