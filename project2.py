@@ -82,6 +82,13 @@ class preprocessing():
         out = pd.merge(out, df3, how='outer', on="Location")
         out = pd.merge(out, df4, how='outer', on='Location')
         out = out.drop(columns='Code')
+        out = out.drop(columns='Wind Generation -TWh')
+        out = out.drop(columns='Solar Generation - TWh')
+        out = out.drop(columns='Nuclear Generation - TWh')
+        out = out.drop(columns='Hydro Generation - TWh')
+        out = out.drop(columns='Geo Biomass Other - TWh')
+        out = out.drop(columns='Gas Consumption - EJ')
+
 
         return out
 
@@ -105,3 +112,16 @@ pre=preprocessing()
 Merge_energy=pre.Merge_energy()
 print(Merge_energy.columns)
 print(Merge_energy.shape)
+
+# Plotting
+import matplotlib.pyplot as plt
+# clean_fuel, coal, oil, indoor death rate, outdoor death rate
+data_clean = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/cleanFuelAndTech.csv',
+                         sep=',')
+Year = data_clean[data_clean['Year']== 2016]
+plt.bar(data_clean['Year'], data_clean['First Tooltip'],
+        width = 0.8)
+plt.xlabel('Year')
+plt.ylabel('First Tooltip')
+plt.title('data_clean')
+plt.show()
