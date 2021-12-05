@@ -8,7 +8,7 @@ class preprocessing():
         self.data_health = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/2.12_Health_systems.csv',  sep = ',')
         self.data_clean = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/cleanFuelAndTech.csv',  sep = ',')
         self.data_pollution = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/death-rates-from-air-pollution.csv',  sep = ',')
-        self.data_GDP=pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/Country wise GDP from 1994 to 2017.csv')
+        self.data_GDP=pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/Country wise GDP from 1994 to 2017.csv', sep = ',')
         self.data_energy = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/Percentage_of_Energy_Consumption_by_Country.csv',  sep = ',')
         self.set1 = {i for i in self.data_health['World_Bank_Name']}
         self.set2 = {i for i in self.data_clean['Location']}
