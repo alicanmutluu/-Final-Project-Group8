@@ -119,10 +119,11 @@ import matplotlib.pyplot as plt
 data_clean_p = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/cleanFuelAndTech.csv',
                          sep=',')
 dc2016 = data_clean_p[data_clean_p['Period'] == 2016]
-plt.bar(dc2016['Location'], dc2016['First Tooltip'],
-        width = 0.8)
-plt.xlabel('Location')
-plt.ylabel('First Tooltip')
+num_bins = 50
+# the histogram of the data
+n, bins, patches = plt.hist(dc2016['First Tooltip'], num_bins, facecolor='blue', alpha=0.5)
+plt.xlabel('First Tooltip')
+plt.ylabel('count')
 plt.title('data_clean clean_fuel Year2016')
 plt.show()
 
@@ -130,34 +131,34 @@ data_energy_p = pd.read_csv(
     'https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/Percentage_of_Energy_Consumption_by_Country.csv',
     sep=',')
 de2016 = data_energy_p[data_energy_p['Year'] == 2016]
-plt.bar(de2016['Entity'], de2016['Coal Consumption - EJ'],
-        width=0.8)
-plt.xlabel('Location')
-plt.ylabel('Coal Consumption - EJ')
+num_bins = 100
+n, bins, patches = plt.hist(de2016['Coal Consumption - EJ'], num_bins, facecolor='blue', alpha=0.5)
+plt.xlabel('Coal Consumption - EJ')
+plt.ylabel('count')
 plt.title('data_energy Coal Consumption Year2016')
 plt.show()
 
 
-plt.bar(de2016['Entity'], de2016['Oil Consumption - EJ'],
-        width = 0.8)
-plt.xlabel('Location')
-plt.ylabel('Oil Consumption - EJ')
+num_bins = 100
+n, bins, patches = plt.hist(de2016['Oil Consumption - EJ'], num_bins, facecolor='blue', alpha=0.5)
+plt.xlabel('Oil Consumption - EJ')
+plt.ylabel('count')
 plt.title('data_energy Oil Consumption Year2016')
 plt.show()
 
 data_pollution_p = pd.read_csv(
     'https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/death-rates-from-air-pollution.csv', sep=',')
 dp2016 = data_pollution_p[data_pollution_p['Year'] == 2016]
-plt.bar(dp2016['Entity'], dp2016['Outdoor particulate matter (deaths per 100,000)'],
-        width=0.8)
-plt.xlabel('Location')
-plt.ylabel('Outdoor ozone pollution (deaths per 100,000)')
-plt.title('data_pollution Outdoor ozone pollution Year2016')
+num_bins = 75
+n, bins, patches = plt.hist(dp2016['Outdoor particulate matter (deaths per 100,000)'], num_bins, facecolor='blue', alpha=0.5)
+plt.xlabel('Outdoor particulate matter (deaths per 100,000)')
+plt.ylabel('count')
+plt.title('data_pollution Outdoor pollution Year2016')
 plt.show()
 
-plt.bar(dp2016['Entity'], dp2016['Indoor air pollution (deaths per 100,000)'],
-        width=0.8)
-plt.xlabel('Location')
-plt.ylabel('Indoor air pollution (deaths per 100,000)')
+num_bins = 100
+n, bins, patches = plt.hist(dp2016['Indoor air pollution (deaths per 100,000)'], num_bins, facecolor='blue', alpha=0.5)
+plt.xlabel('Indoor air pollution (deaths per 100,000)')
+plt.ylabel('count')
 plt.title('data_pollution Indoor air pollution Year2016')
 plt.show()
