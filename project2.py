@@ -72,16 +72,13 @@ class preprocessing():
 
     def Merge_energy(self):
         df5 = self.dfselection(self.setf2, self.data_energy, 'Entity')
-      
         df3 = self.dfselection(self.setf2, self.data_pollution, 'Entity')
         df4 = self.dfselection(self.setf2, self.data_GDP, 'Country')
         df3 = df3.rename(columns={'Entity': 'Location'})
         df4 = df4.rename(columns={'Country': 'Location'})
         df5 = df5.rename(columns={'Entity': 'Location'})
-        
-        out = pd.merge(df5, df3, how='outer', on="Location")
-        out = pd.merge(out, df4, how='outer', on='Location')
-        
+        out = pd.merge(df5, df3, how='outer', on=['Location', 'Year'])
+        out = pd.merge(out, df4, how='outer', on=['Location', 'Year'])
         out = out.drop(columns='Wind Generation -TWh')
         out = out.drop(columns='Solar Generation - TWh')
         out = out.drop(columns='Nuclear Generation - TWh')
@@ -120,7 +117,6 @@ data_clean_p = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollu
                          sep=',')
 dc2016 = data_clean_p[data_clean_p['Period'] == 2016]
 num_bins = 50
-# the histogram of the data
 n, bins, patches = plt.hist(dc2016['First Tooltip'], num_bins, facecolor='blue', alpha=0.5)
 plt.xlabel('First Tooltip')
 plt.ylabel('count')
