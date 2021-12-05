@@ -165,9 +165,8 @@ class estimator(QMainWindow):
 
     def update(self):
         '''
-        Random Forest Classifier
-        We pupulate the dashboard using the parametres chosen by the user
-        The parameters are processed to execute in the skit-learn Random Forest algorithm
+        Estimator
+        Populating the dashboard using the parameters chosen by the user
           then the results are presented in graphics and reports in the canvas
         :return:None
         '''
