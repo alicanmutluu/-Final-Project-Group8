@@ -8,13 +8,13 @@ class preprocessing():
         self.data_health = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/2.12_Health_systems.csv',  sep = ',')
         self.data_clean = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/cleanFuelAndTech.csv',  sep = ',')
         self.data_pollution = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/death-rates-from-air-pollution.csv',  sep = ',')
-        self.data_GDP=pd.read_csv('Country wise GDP from 1994 to 2017.csv')
-        self.data_share = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/share-energy-consum-by-source.csv',  sep = ',')
+        self.data_GDP=pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/Country wise GDP from 1994 to 2017.csv')
+        self.data_energy = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/Percentage_of_Energy_Consumption_by_Country.csv',  sep = ',')
         self.set1 = {i for i in self.data_health['World_Bank_Name']}
         self.set2 = {i for i in self.data_clean['Location']}
         self.set3 = {i for i in self.data_pollution['Entity']}
         self.set4 = {i for i in self.data_GDP['Country']}
-        self.set5 = {i for i in self.data_share['Entity']}
+        self.set5 = {i for i in self.data_energy['Entity']}
         self.setf = self.set1.intersection(self.set2)
         self.setf = self.setf.intersection(self.set3)
         self.setf = self.setf.intersection(self.set4)
@@ -47,13 +47,7 @@ class preprocessing():
         out=out.drop(columns='Province_State')
         
         return out
-    
-    def outdoor2016(self):
-        df1=self.dfselection(self.setf,self.data_health,'World_Bank_Name')
-        df3=self.dfselection(self.setf,self.data_pollution,'Entity')
-        df5=self.dfselection(self.setf,self.data_share,'Entity')
-        
-        return
+
     def indoor(self):
         # merge df2 df3 df4 on location and year, on=outer do not drop na
         df2=self.dfselection(self.setf2,self.data_clean,'Location')
@@ -65,19 +59,32 @@ class preprocessing():
         out = pd.merge(df2, df3, how='outer', on=['Location','Year'])
         out = pd.merge(out, df4, how='outer', on=['Location','Year'])
         
-        return
+        return out
 
     def outdoor(self):
         # merge df3 df4 df5, on location and year, on=outer do not drop na
         df3=self.dfselection(self.setf,self.data_pollution,'Entity')
         df4=self.dfselection(self.setf,self.data_GDP,'Country')
-        df5=self.dfselection(self.setf,self.data_share,'Entity')
+        df3 = df3.rename(columns={'Entity': 'Location'})
+        df4 = df4.rename(columns={'Country': 'Location'})
+        out = pd.merge(df3, df4, how='outer', on=['Location', 'Year'])
+        return out
+
+    def Merge_energy(self):
+        df5 = self.dfselection(self.setf2, self.data_energy, 'Entity')
+        df2 = self.dfselection(self.setf2, self.data_clean, 'Location')
+        df3 = self.dfselection(self.setf2, self.data_pollution, 'Entity')
+        df4 = self.dfselection(self.setf2, self.data_GDP, 'Country')
         df3 = df3.rename(columns={'Entity': 'Location'})
         df4 = df4.rename(columns={'Country': 'Location'})
         df5 = df5.rename(columns={'Entity': 'Location'})
-        out = pd.merge(df3, df4, how='outer', on=['Location', 'Year'])
-        out = pd.merge(out, df5, how='outer', on=['Location', 'Year'])
-        return
+        out = pd.merge(df5, df2, how='outer', on='Location')
+        out = pd.merge(out, df3, how='outer', on="Location")
+        out = pd.merge(out, df4, how='outer', on='Location')
+        out = out.drop(columns='Code')
+
+        return out
+
 #prepare data for indoor2016 
 pre=preprocessing()
 indoor2016=pre.indoor2016()
@@ -87,14 +94,14 @@ print(indoor2016.shape)
 pre=preprocessing()
 indoor=pre.indoor()
 print(indoor.columns)
-print(indoor.shape) 
-#prepare data for outdoor2016
-pre=preprocessing()
-outdoor2016=pre.outdoor2016()
-print(outdoor2016.columns)
-print(outdoor2016.shape) 
+print(indoor.shape)
 #prepare data for outdoor
 pre=preprocessing()
 outdoor=pre.outdoor()
 print(outdoor.columns)
-print(outdoor.shape) 
+print(outdoor.shape)
+#prepare data for Merge_energy
+pre=preprocessing()
+Merge_energy=pre.Merge_energy()
+print(Merge_energy.columns)
+print(Merge_energy.shape)
