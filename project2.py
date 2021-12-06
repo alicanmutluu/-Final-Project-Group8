@@ -112,7 +112,7 @@ print(Merge_energy.shape)
 
 # Plotting
 import matplotlib.pyplot as plt
-# clean_fuel, coal, oil, indoor death rate, outdoor death rate
+# clean_fuel, coal, oil, indoor death rate, outdoor death rate, GDP
 data_clean_p = pd.read_csv('https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/cleanFuelAndTech.csv',
                          sep=',')
 dc2016 = data_clean_p[data_clean_p['Period'] == 2016]
@@ -157,4 +157,14 @@ n, bins, patches = plt.hist(dp2016['Indoor air pollution (deaths per 100,000)'],
 plt.xlabel('Indoor air pollution (deaths per 100,000)')
 plt.ylabel('count')
 plt.title('data_pollution Indoor air pollution Year2016')
+plt.show()
+
+data_GDP_p = pd.read_csv(
+    'https://raw.githubusercontent.com/alicanmutluu/Pollution-Solvers/main/Country_wise_GDP_from_1994_to_2017.csv', sep=',')
+dg2016 = data_GDP_p[data_GDP_p['Year'] == 2016]
+num_bins = 75
+n, bins, patches = plt.hist(dg2016['GDP per capita (in USD)'], num_bins, facecolor='blue', alpha=0.5)
+plt.xlabel('GDP per capita (in USD)')
+plt.ylabel('count')
+plt.title('data_GDP GDP per capita Year2016')
 plt.show()
