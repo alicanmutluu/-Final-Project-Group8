@@ -1,6 +1,6 @@
 # Pollution-Solvers
 Data Mining - Final Group Project Repository
-First time running main.py
-GUI can work individually after first time
-execute main, preprocessor.py, model_final.py, model_maker, estimator and GUI will be executed
-the model.py, model2.py and model2016.py are early work for modeling
+Group-Proposal: The pdf file of group proposal.
+Final-Group-Project-Report: The pdf file of final group project report.
+Final-Group-Presentation: The pdf file of final group presentation.
+Code: All major codes of this project. Please read the README.md inside first before operating the code files.
